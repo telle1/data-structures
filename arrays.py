@@ -158,4 +158,99 @@ assert is_palindrome_perm('racecar') == True
 assert is_palindrome_perm('race car') == True
 assert is_palindrome_perm('tactcoapapa') == True
 
+#1.5 One Away
+#replace, insert, remove
+def check_one_away(str1, str2):
+    #make str1 the bigger one
+    if len(str2) > len(str1):
+        temp = str2
+        str2 = str1
+        str1 = temp
+    
+    if len(str1) == len(str2):
+        for i in range(len(str2)):
+            if str2[i] in str1:
+                str1 = str1.replace(str2[i], "", 1)
+        return len(str1) == 1 or len(str1) == 0
+    elif len(str1) == (len(str2)+1):
+        return check_length(str1, str2) 
+    elif (len(str1)-1) == (len(str2)):
+        return check_length(str1, str2)
+    return False
+        
+
+def check_length(str1, str2):
+    for i in range(len(str2)):
+        if str2[i] in str1:
+            str1 = str1.replace(str2[i], "", 1)
+    return len(str1) == 1
+
+assert (check_one_away('pale', 'pale')) == True
+assert(check_one_away('kale', 'pale')) == True
+
+assert(check_one_away('pale', 'ple')) == True
+assert(check_one_away('pales', 'pale')) == True
+assert(check_one_away('pale', 'pales')) == True
+
+assert(check_one_away('ple', 'pale')) == True
+assert(check_one_away('pale', 'bake')) == False
+assert(check_one_away('pale', 'bakessss')) == False
+        
+#1.6 String Compression
+def compress_str(string):
+    lst = []
+    count = 1 
+    for i in range(1, len(string)):
+        if string[i] != string[i-1]:
+            add_to_list(lst, string[i-1], count)
+            count = 1
+        else:
+            count += 1
+    add_to_list(lst, string[-1], count)
+    return ''.join(lst)
+
+def add_to_list(lst, string, count):
+    lst.append(string)
+    lst.append(str(count))
+        
+print(compress_str('aabcccccaaa'))
+assert compress_str('aabcccccaaa') == 'a2b1c5a3'
+
+#1.7 Rotate matrix by 90
+def rotate_matr_90(matr):
+    n = len(matr[0])
+    for i in range(n):
+        for j in range(i+1, n):
+            matr[i][j], matr[j][i] = matr[j][i], matr[i][j]
+        matr[i].reverse()
+    return matr
+
+print(rotate_matr_90([  [1, 2, 3],
+                        [4, 5, 6],
+                        [7, 8, 9]
+                        ]))
+
+#1.8 Zero column and row matrix
+def zero_matrix(matr):
+    for i in range(len(matr)):
+        for j in range(len(matr[i])):
+            if matr[i][j] == 0: #1,2
+                matr[i] = [0] * len(matr[i])
+                for k in range(len(matr)):
+                    matr[k][j] = 0
+                return matr
+    
+    return matr
+            # print(j, 'j')
+        
+
+print(zero_matrix([[1,2,3],
+                   [4,5,0],
+                   [5,7,8]]))
+
+print(zero_matrix([[1,2,3],
+                   [4,5,8],
+                   [5,7,8]]))
+                   
+                   
 
