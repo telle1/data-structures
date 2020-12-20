@@ -107,30 +107,86 @@ class LList():
         while curr_1 and curr_1.data != key_1:
             prev_1 = curr_1
             curr_1 = curr_1.next
+        print(prev_1.data) #A
+        print(curr_1.data) #B
+
         prev_2 = None
         curr_2 = self.head
         while curr_2 and curr_2.data != key_2:
             prev_2 = curr_2
-            curr_2 = curr_2
+            curr_2 = curr_2.next
+        print(prev_2.data) #B
+        print(curr_2.data) #C
+
         if not curr_1 or not curr_2:
             return 
 
+        if prev_1: #if it exists
+            prev_1.next = curr_2 #A -> C
+        else: #its the head
+            self.head = curr_2
 
-llist_ex = LList()
+        if prev_2:
+            prev_2.next = curr_1 
+            pass
+        else:
+            self.head = curr_1
+        curr_1.next, curr_2.next = curr_2.next, curr_1.next 
+    
+    def reverse_llist(self):
+        prev = None
+        current = self.head
+        while current:
+            nxt = current.next
+            current.next = prev
+            prev = current
+            current = nxt #create temp var nxt b/c current = current.next will not work 
+        self.head = prev
+    
+    def merge_two_sorted_lists(self, llist):
+        curr1 = self.head
+        curr2 = llist.head
+        while curr2: 
+            if curr1 < curr2:
+                curr1 = curr1.next
+            else: #curr2 > curr1
+                temp_next = curr1.next
+                curr1.next = curr2
+                llist.head = curr2.next
+                curr2.next = temp_next
 
-llist_ex.append('B')
-llist_ex.append('C')
-llist_ex.append('D')
-llist_ex.append('E')
-llist_ex.append('G')
-llist_ex.prepend('A')
-llist_ex.delete('A')
-llist_ex.insert('F', llist_ex.head.next)
-llist_ex.delete_at_i(1)
-llist_ex.print_llist()
-print(llist_ex.length())
-print(llist_ex.length_recursive(llist_ex.head))
 
+
+        
+
+
+
+
+
+
+
+# llist_ex = LList()
+
+# llist_ex.append('B')
+# llist_ex.append('C')
+# llist_ex.append('D')
+# llist_ex.append('E')
+# llist_ex.append('G')
+# llist_ex.prepend('A')
+# llist_ex.delete('A')
+# llist_ex.insert('F', llist_ex.head.next)
+# llist_ex.delete_at_i(1)
+# llist_ex.print_llist()
+# print(llist_ex.length())
+# print(llist_ex.length_recursive(llist_ex.head))
 
 llist_2 = LList()
-print(llist_2.length())
+llist_2.append('A')
+llist_2.append('B')
+llist_2.append('C')
+llist_2.append('D')
+llist_2.swap_nodes('B', 'C')
+print('\n')
+llist_2.print_llist()
+
+
