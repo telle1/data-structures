@@ -232,25 +232,73 @@ print(rotate_matr_90([  [1, 2, 3],
 
 #1.8 Zero column and row matrix
 def zero_matrix(matr):
+    
+    matr_copy = []
+
+    for row in matr:
+        matr_copy.append(row[:])
+    print(matr_copy)
+
     for i in range(len(matr)):
         for j in range(len(matr[i])):
-            if matr[i][j] == 0: #1,2
-                matr[i] = [0] * len(matr[i])
+            if matr[i][j] == 0:
+                # print(matr[i][j])
+                # print(i,j)
+                matr_copy[i] = [0] * len(matr[i])
+                # print(matr)
                 for k in range(len(matr)):
-                    matr[k][j] = 0
-                return matr
+                    matr_copy[k][j] = 0
+                    print(k, j, 'k & j')
+                    
+    return matr_copy
+                
+
     
-    return matr
-            # print(j, 'j')
+print(zero_matrix([ [0, 2, 3],
+                    [4, 5, 6]]))
+
+assert zero_matrix([ [1, 2, 3],
+[4, 5, 0] ]) == [[1, 2, 0], [0, 0, 0]]
+
+assert zero_matrix([ [0, 2, 3],
+                     [4, 5, 0]]) == [[0, 0, 0], [0, 0, 0]]
+
+assert zero_matrix([ [0, 2, 3],
+                     [4, 5, 6]]) == [[0, 0, 0], [0, 5, 6]]
+
+assert zero_matrix([ [0, 2, 3],
+                     [4, 5, 0], 
+                     [7, 8, 9]]) == [[0, 0, 0], [0, 0, 0], [0, 8, 0]]
+                   
+
+# HACKERRANK
+def hourglassSum(arr):
+    hourglass_sum = []
+    for i in range(len(arr)-2):
+        for j in range(len(arr)-2):
+            summ = arr[i][j] + arr[i][j+1] + arr[i][j+2] + arr[i+1][j+1] + arr[i+2][j] + arr[i+2][j+1] + arr[i+2][j+2]
+            # print(summ)
+            hourglass_sum.append(summ)
+    return max(hourglass_sum)
+ 
+
+
+#leetcode
+def reverseVowels(strr):
+    vowels= list('AEIOUaeiou')
+    strr = list(strr)
+    start = 0
+    end = len(strr)-1
+    while start < end:
+        if strr[start] in vowels and strr[end] in vowels:
+            strr[start], strr[end] = strr[end], strr[start]
+            start += 1
+            end -= 1
+        if strr[start] not in vowels:
+            start += 1
+        if strr[end] not in vowels:
+            end -=1
+    return ''.join(strr)
+    
+print(reverseVowels('leetcodeeeeee'))
         
-
-print(zero_matrix([[1,2,3],
-                   [4,5,0],
-                   [5,7,8]]))
-
-print(zero_matrix([[1,2,3],
-                   [4,5,8],
-                   [5,7,8]]))
-                   
-                   
-
