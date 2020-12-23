@@ -301,4 +301,78 @@ def reverseVowels(strr):
     return ''.join(strr)
     
 print(reverseVowels('leetcodeeeeee'))
+
+# Input: command = "G()(al)"
+# Output: "Goal"
+# Explanation: The Goal Parser interprets the command as follows:
+# G -> G
+# () -> o
+# (al) -> al
+# The final concatenated result is "Goal".
+
+def interpret(command):
+    cmd = []
+    i = 0
+    while i < len(command):
+        print(i)
+        if command[i] == "G":
+            cmd.append("G")
+            i+= 1
+        if command[i:i+2] == '()':
+            cmd.append('o')
+            i+=2
+        if command[i:i+4] == '(al)':
+            cmd.append('al')
+            i+= 4
+    return ''.join(cmd)
+
+print(interpret("G()(al)"))
+print(interpret("G()()()()(al)"))
+print(interpret("(al)G(al)()()G"))
         
+#this is not exactly optimal..use pointers instead
+def is_long_name(name, typed):
+    name_lst = []
+    count = 1
+    for i in range(1, len(name)):
+        if name[i] != name[i-1]:
+            name_lst.append(count)
+            name_lst.append(name[i-1])
+            count = 1
+            
+        else:
+            count += 1
+    name_lst.append(count)
+    name_lst.append(name[-1])
+
+    typed_lst = []
+    count2 = 1
+    for j in range(1, len(typed)):
+        if typed[j] != typed[j-1]:
+            typed_lst.append(count2)
+            typed_lst.append(typed[j-1])
+            count2 = 1
+        else:
+            count2 += 1
+    typed_lst.append(count2)
+    typed_lst.append(typed[-1])
+
+    if len(name_lst) != len(typed_lst):
+        return False
+    
+    for k in range(1, len(name_lst), 2):
+        if name_lst[k] != typed_lst[k]:
+            return False
+            
+    print(name_lst, typed_lst)
+    
+    for l in range(0, len(name_lst), 2):
+        if int(name_lst[l]) > int(typed_lst[l]):
+            return False
+        
+    
+    return True
+    
+    
+print(is_long_name('alex', 'aaleex'))
+print(is_long_name('saeed', 'ssaaedd')) #False
