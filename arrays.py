@@ -376,3 +376,122 @@ def is_long_name(name, typed):
     
 print(is_long_name('alex', 'aaleex'))
 print(is_long_name('saeed', 'ssaaedd')) #False
+
+
+# Given a non-empty array of non-negative integers nums, the degree of this array is defined as the maximum frequency of any one of its elements.
+
+# Your task is to find the smallest possible length of a (contiguous) subarray of nums, that has the same degree as nums.
+
+ 
+
+# Example 1:
+
+# Input: nums = [1,2,2,3,1]
+# Output: 2
+# Explanation: 
+# The input array has a degree of 2 because both elements 1 and 2 appear twice.
+# Of the subarrays that have the same degree:
+# [1, 2, 2, 3, 1], [1, 2, 2, 3], [2, 2, 3, 1], [1, 2, 2], [2, 2, 3], [2, 2]
+# The shortest length is 2. So return 2.
+
+def test(nums):
+    left, right, count = {}, {}, {}
+    for i, num in enumerate(nums):
+        if num not in left:
+            left[num] = i
+        right[num] = i
+        count[num] = count.get(num, 0) + 1
+    print(left, right, count)
+    max_count = max(count.values())
+    # print(max_count) #2
+    ans = len(nums)
+    for num in count:
+        if count[num] == max_count:
+            ans = min(ans, right[num] - left[num] + 1)
+    return ans
+            
+print(test([1,2,2,3,1]))
+
+def maxSubArray(nums):
+#         if len(nums) == 1:
+#             return nums[0]
+    
+#         maxx = nums[0]
+    
+#         for i in range(len(nums)):
+#             for j in range(i, len(nums)):
+#                 if sum(nums[i:j+1]) > maxx:
+#                     maxx = sum(nums[i:j+1])
+#         return maxx
+    sum_ = 0
+    max_ = nums[0]
+    for num in nums:
+        if sum_ < 0:
+            sum_ = 0
+        sum_ += num
+        max_ = max(max_, sum_)
+    return max_
+
+#Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        lst = []
+        for i in range(numRows):
+            lst.append([1] * (i+1))
+            for j in range(1, len(lst[i])-1):
+                lst[i][j] = lst[i-1][j-1] + lst[i-1][j] 
+        return lst
+        
+# Example
+
+#     For operations = ["INSERT Code", "INSERT Signal", "DELETE", "UNDO"], the output should be newTextEditor(operations) = "CodeSignal".
+	
+#         Initially the text is empty,
+		
+#         After the "INSERT Code" operation, the text is "Code",
+		
+#         After the "INSERT Signal" operation, the text is "CodeSignal",
+		
+#         After the "DELETE" operation, the last character is removed, so the text is "CodeSigna",
+		
+#         After the "UNDO" operation, the DELETE operation is undone, so the text is "CodeSignal",
+#         So the final string is "CodeSignal".
+#   INSERT <text> - add <text> to the end of the current text, where <text> consists of at most 20 English letters,
+	
+#     DELETE - erase the last character of the current text (if the current text is empty, does nothing),
+	
+#     COPY <index> - copy the substring of the current text starting from <index> and spanning until the end (if <index> is out of bounds copies an empty string), i.e. sets the clipboard value equal to the given substring,
+	
+#     PASTE - add the last copied text to the end of the current text (if the last copied text is empty, does nothing),
+	
+#     UNDO - undo the last successful INSERT, DELETE or PASTE operation (if there is nothing to undo, does nothing).
+def texteditors(arr):
+    res = []
+    last = None
+    last_char = None
+    clipboard = None
+    for i in range(len(arr)):
+        x = arr[i].split()
+        
+        if x[0] == 'INSERT':
+            res.append(x[1])
+            last = x
+        elif x[0] == 'DELETE':
+            if len(res) != 0:
+                last_char = res[-1][-1]
+                res[-1] = res[-1][:-1]
+                last = x
+        elif x[0] == 'UNDO':
+            if last[0] == 'DELETE':
+                res[-1] = res[-1] + last_char 
+                print('lastchar', res[-1])
+            if last[0] == 'INSERT' or last[0] == 'PASTE':
+                res.pop()
+        elif x[0] == 'COPY':
+            res_str = ''.join(res)
+            start = int(x[1])
+            clipboard = res_str[start:]
+        elif x[0] == 'PASTE':
+            last = x
+            res.append(clipboard)
+    return ''.join(res)
