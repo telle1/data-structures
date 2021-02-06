@@ -42,4 +42,38 @@ print(rev_string(s, 'Hello'))
 #olleH
 #str[::-1]
 
+#stack where min elements are at top
+class Stack():
+    def __init__(self):
+        self.items = []
+        self.temp = []
+    def push(self, item):
+        if len(self.items) > 0:
+            while self.items and item > self.items[-1]:
+                x = self.items.pop()
+                self.temp.append(x)
+            self.items.append(item)
+            while len(self.temp) != 0:
+                x = self.temp.pop()
+                self.items.append(x)
+        else:
+            self.items.append(item)
+                    
+    def pop(self):
+        self.items.pop()
+    def peek(self):
+        return self.items[-1]
+    def isEmpty(self):
+        return len(self.items) == 0
+    def print(self):
+        print(self.items)
+    
+s = Stack()
+s.push(1)
+s.push(2)
+s.push(3)
+s.push(2)
+s.push(4)
+s.print()
+
 
