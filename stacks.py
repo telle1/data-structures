@@ -42,7 +42,7 @@ print(rev_string(s, 'Hello'))
 #olleH
 #str[::-1]
 
-#stack where min elements are at top
+#Sort stack such that the smallest items are on the top
 class Stack():
     def __init__(self):
         self.items = []
@@ -76,4 +76,55 @@ s.push(2)
 s.push(4)
 s.print()
 
+#Implement a queue using 2 stacks
+class Queue():
+    def __init__(self):
+        self.items = []
+        self.temp = []
+    def enqueue(self, item):
+        if len(self.items) == 0:
+            self.items.append(item)
+        else:
+            while len(self.items) != 0:
+                x = self.items.pop()
+                self.temp.append(x)
+            self.items.append(item)
+            while len(self.temp) != 0:
+                x = self.temp.pop()
+                self.items.append(x)
+    def dequeue(self):
+        self.items.pop()
+    def print(self):
+        print(self.items)
+
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+q.dequeue()
+q.print()
+
+#Stack with function min which returns the min element in O(n)
+class Stack():
+    def __init__(self):
+        self.items = []
+    def push(self, num):
+        if len(self.items) == 0:
+            self.items.append([num, num])
+        else:
+            min_ = self.get_min()
+            if num < min_:
+                min_ = num
+            self.items.append([num, min_])
+    def pop(self):
+        self.items.pop()
+    def get_min(self):
+        return self.items[-1][1]
+
+s = Stack()
+s.push(1)
+s.push(2)
+s.push(3)
+s.push(-1)
+print(s.get_min())
 
