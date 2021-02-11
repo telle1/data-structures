@@ -114,4 +114,27 @@ root.left.right = Node(5)
  
 print ("Level Order Traversal of binary tree is -")
 printLevelOrder(root)
-#This code is contributed by Nikhil Kumar Singh(nickzuck_007)
+
+#mAx depth
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        stack = [root]
+        depth = 0
+        if not root: 
+            return 0
+        while stack:
+            queue = []
+            depth +=1
+            for node in stack:
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            stack = queue
+        return depth
+            
